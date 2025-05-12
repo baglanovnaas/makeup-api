@@ -53,7 +53,7 @@
             const input = document.querySelector('.input').value.toLowerCase();
             const info = document.querySelector('.info');
 
-            fetch("http://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline")
+            fetch("https://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline")
             .then(response => response.json())
             .then(data => {
                 const results = data.filter(item => item.name.toLowerCase().includes(input));
