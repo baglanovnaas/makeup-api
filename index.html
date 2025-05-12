@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body{
+        font-family: sans-serif;
+        text-align: center;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        min-height: 100vh;
+    }
+    input{
+        padding: 10px;
+        border: 1px solid black;
+    }
+    button{
+        background-color: rgb(255, 191, 203);
+        padding: 10px;
+        width: 200px;
+        height: 35px;
+        border-radius: 10px;
+        border: none;
+        font-weight: 600;
+    }
+    p{
+        width: 400px;
+        line-height: 25px;
+    }
+</style>
+<body>
+    <h1>Maybelline products</h1>
+    <input class="input" type="text" placeholder="Enter a product name...">
+    <button class="btn">Search</button>
+    <p><span>For example:</span> Mascara, eyeliner, contour, foundation, concealer, blush, bronzer, lipliner, highlighter.</p>
+    <div class="info"></div>
+
+    <script>
+        const btn = document.querySelector('.btn');
+
+        btn.addEventListener("click", function(){
+            const input = document.querySelector('.input').value.toLowerCase();
+            const info = document.querySelector('.info');
+
+            fetch("http://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline")
+            .then(response => response.json())
+            .then(data => {
+                const results = data.filter(item => item.name.toLowerCase().includes(input));
+                
+                if (results.length === 0){
+                    info.innerHTML = `
+                        <p>We do not have this product.</p>
+                    `;
+                    return;
+                }
+
+                info.innerHTML = ``;
+                results.forEach(item => {
+                    info.innerHTML += `
+                        <h3>${item.name}</h3>
+                        <img src="${item.image_link}" width="100"><br>
+                        <p style="margin-bottom: 10px; margin-left: 55px;">Price: $ ${item.price}</p>
+                        <hr>
+                    `;
+                });
+            });
+        });
+    </script>
+</body>
+</html>
