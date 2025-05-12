@@ -1,1 +1,1 @@
-https://baglanovnaas.github.io/makeup_api/
+https://baglanovnaas.github.io/makeup-api/
